@@ -16,10 +16,12 @@
     <div id="main">
       <h1>chatterbox</h1>
       <div class = "messagebox">
+      <select id="roomSelect">        
+      </select>
       <input type="text"  id = "message"
       placeholder = "Type message here!" size = "50">
       </input>
-      <button id = "send" onclick="app.handleSubmit(document.getElementById('message').value)"> Send Message 
+      <button id = "send" onclick="app.handleSubmit(document.getElementById('message').value, document.getElementById('roomSelect').value)"> Send Message 
       </button>
        <button id = "room" onclick="app.addRoom(document.getElementById('message').value)"> Add/Filter Room 
       </button>

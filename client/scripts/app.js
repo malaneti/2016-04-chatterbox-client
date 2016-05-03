@@ -5,11 +5,11 @@ var app = {
   chats: {},
   server: 'https://api.parse.com/1/classes/messages',
   init: function() {
-    // app.fetch(server);
+    app.fetch(app.server);
 		// app.addFriend();
-		// app.addRoom();
+		//app.addRoom();
     // app.addMessage();
-    app.clearMessages();
+    // app.clearMessages();
   },
 
   send: function(message) {
@@ -21,7 +21,7 @@ var app = {
       contentType: 'application/json',
       success: function(data) {
         console.log(data);
-        // app.fetch(server);
+        app.fetch(app.server);
       },
       error: function(data) {
         console.error('chatterbox: Failed to send message');
@@ -38,7 +38,7 @@ var app = {
 				//app.clearMessages();
         chats = data;
         console.log(chats);
-        //addMessage(data);
+        app.addMessage();
       },
       error: function (data) {
         console.error('chatterbox: Failed to send message');
@@ -46,15 +46,18 @@ var app = {
     });
   },
 
-  addMessage: function(message, room) {
-    
-
-
+  addMessage: function() {
     //For appending to DOM only
     //Does not call send
-    if (app.rooms.indexOf(room) === -1) {
-      addRoom(room);
-    }
+    setInterval(function () {
+      $('#chats').empty();
+      for (var i = 0; i < chats.results.length; i++) {
+        $('#chats').append('<div class="' + chats.results[i].roomname + '"><em>' + chats.results[i].username + ': </em>' + chats.results[i].text + '</div>');
+        if (app.rooms.indexOf(chats.results[i].roomname) === -1 && chats.results[i].roomname !== undefined) {
+          app.addRoom(chats.results[i].roomname);
+        }
+      }
+    }, 20);
     // add room as class for each msg
   },
 
@@ -70,13 +73,16 @@ var app = {
   },
 
   addRoom: function (room) {
-    
+    app.rooms.push(room);
+    $('select').append('<option value="' + room + '">' + room + '</option>');
+    //do whatever dom stuff
   },
 
-  handleSubmit: function(msg) {
+  handleSubmit: function(msg, room) {
     app.send({
       text: msg,
-      username: username
+      username: username,
+      roomname: room
     });
   }
 

@@ -19,7 +19,9 @@
       <input type="text"  id = "message"
       placeholder = "Type message here!" size = "50">
       </input>
-      <button id = "send"> Send Message 
+      <button id = "send" onclick="app.handleSubmit(document.getElementById('message').value)"> Send Message 
+      </button>
+       <button id = "room" onclick="app.addRoom(document.getElementById('message').value)"> Add/Filter Room 
       </button>
 
       

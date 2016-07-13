@@ -49,15 +49,18 @@ var app = {
   addMessage: function() {
     //For appending to DOM only
     //Does not call send
-    setInterval(function () {
+    //setInterval(function () {
+     $('#refresh').click(function(){
       $('#chats').empty();
       for (var i = 0; i < chats.results.length; i++) {
         $('#chats').append('<div class="' + chats.results[i].roomname + '"><em>' + chats.results[i].username + ': </em>' + chats.results[i].text + '</div>');
         if (app.rooms.indexOf(chats.results[i].roomname) === -1 && chats.results[i].roomname !== undefined) {
           app.addRoom(chats.results[i].roomname);
+
         }
       }
-    }, 20);
+    });
+   // }, 20);
     // add room as class for each msg
   },
 
